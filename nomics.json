@@ -1,0 +1,481 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "nomics",
+    "version": "1.0",
+    "description": "Price, volume, market cap, and rank for all currencies across 1 hour, 1 day, 7 day, 30 day, 365 day, and year to date intervals. Current prices are updated every 10 seconds.",
+    "summary": "nomics api"
+  },
+  "servers": [
+    {
+      "url": "https://api.nomics.com/v1"
+    }
+  ],
+  "paths": {
+    "/currencies/ticker": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "operationId": "get-currencies",
+        "tags": [
+          "Current stickers"
+        ],
+        "description": "Price, volume, market cap, and rank for all currencies across 1 hour, 1 day, 7 day, 30 day, 365 day, and year to date intervals. Current prices are updated every 10 seconds.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "ids=BTC,ETH,XRP"
+            },
+            "in": "query",
+            "name": "ids",
+            "description": "Comma separated list of Nomics Currency IDs to filter result rows"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "interval=1d,30d"
+            },
+            "in": "query",
+            "name": "intervals",
+            "description": "Comma separated time interval of the ticker(s). Default is 1d,7d,30d,365d,ytd."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "quote-currency=EUR"
+            },
+            "in": "query",
+            "name": "quote-currency",
+            "deprecated": true,
+            "description": "Currency to quote ticker price, market cap, and volume values. Must be a valid currency from Fiat Exchange Rates. Default is USD."
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "convert=EUR"
+            },
+            "in": "query",
+            "name": "convert",
+            "description": "Currency to quote ticker price, market cap, and volume values. May be a Fiat Currency or Cryptocurrency. Default is USD."
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "status",
+            "description": "Status by which to filter currencies. If not provided, all currencies are shown."
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "filter",
+            "description": "Further filter the set of currencies. The new filter returns currencies that have recently been priced by Nomics and any returns currencies regardless of their state. The any filer may be used to retrieve new-but-stale currencies that are listed under new, but are no longer active."
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "platform-currency",
+            "description": "Filter the results by parent platform."
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "sort",
+            "description": "How to sort the returned currencies. rank sorts by rank ascending and first_priced_at sorts by when each currency was first priced by Nomics descending. Only currencies priced after 2020-10-08 have a first_priced_at value so all other currencies have the same weight within the sort."
+          },
+          {
+            "schema": {
+              "type": "boolean"
+            },
+            "in": "query",
+            "name": "include-transparency",
+            "description": "Whether to include Transparent Volume and transparent market cap information in the response. Default is false. This option is only available to customers of our paid API plans."
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "default": "default=100",
+              "example": "per-page=100"
+            },
+            "in": "query",
+            "name": "per-page",
+            "description": "The maximum number of items to return per paginated response. Paginated responses include an additional response header, X-Pagination-Total-Items, which represents the total number of items available after all the request filters have been applied. Must be between 1 and 100 (inclusive)."
+          },
+          {
+            "schema": {
+              "type": "integer",
+              "example": "page=1"
+            },
+            "in": "query",
+            "name": "page",
+            "description": "Which page of items to get."
+          },
+          {
+            "schema": {},
+            "in": "query",
+            "name": "key",
+            "description": "API KEY"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "description": "",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "currency",
+                    "id",
+                    "status",
+                    "price",
+                    "price_date",
+                    "price_timestamp",
+                    "symbol",
+                    "circulating_supply",
+                    "max_supply",
+                    "name",
+                    "logo_url",
+                    "market_cap",
+                    "market_cap_dominance",
+                    "transparent_market_cap",
+                    "num_exchanges",
+                    "num_pairs",
+                    "num_pairs_unmapped",
+                    "first_candle",
+                    "first_trade",
+                    "first_order_book",
+                    "first_priced_at",
+                    "rank",
+                    "rank_delta",
+                    "high",
+                    "high_timestamp",
+                    "1d"
+                  ],
+                  "properties": {
+                    "currency": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "status": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "price": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "price_date": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "price_timestamp": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "symbol": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "circulating_supply": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "max_supply": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "logo_url": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "market_cap": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "market_cap_dominance": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "transparent_market_cap": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "num_exchanges": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "num_pairs": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "num_pairs_unmapped": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "first_candle": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "first_trade": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "first_order_book": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "first_priced_at": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "rank": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "rank_delta": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "high": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "high_timestamp": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "1d": {
+                      "type": "object",
+                      "properties": {
+                        "price_change": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "price_change_pct": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "volume": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "volume_change": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "volume_change_pct": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "market_cap_change": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "market_cap_change_pct": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "transparent_market_cap_change": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "transparent_market_cap_change_pct": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "volume_transparency": {
+                          "type": "array",
+                          "uniqueItems": true,
+                          "minItems": 1,
+                          "items": {
+                            "required": [
+                              "grade",
+                              "volume",
+                              "volume_change",
+                              "volume_change_pct"
+                            ],
+                            "properties": {
+                              "grade": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "volume": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "volume_change": {
+                                "type": "string",
+                                "minLength": 1
+                              },
+                              "volume_change_pct": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "price_change",
+                        "price_change_pct",
+                        "volume",
+                        "volume_change",
+                        "volume_change_pct",
+                        "market_cap_change",
+                        "market_cap_change_pct",
+                        "transparent_market_cap_change",
+                        "transparent_market_cap_change_pct",
+                        "volume_transparency"
+                      ]
+                    }
+                  }
+                },
+                "x-examples": {
+                  "example-1": [
+                    {
+                      "currency": "BTC",
+                      "id": "BTC",
+                      "status": "active",
+                      "price": "8451.36516421",
+                      "price_date": "2019-06-14T00:00:00Z",
+                      "price_timestamp": "2019-06-14T12:35:00Z",
+                      "symbol": "BTC",
+                      "circulating_supply": "17758462",
+                      "max_supply": "21000000",
+                      "name": "Bitcoin",
+                      "logo_url": "https://s3.us-east-2.amazonaws.com/nomics-api/static/images/currencies/btc.svg",
+                      "market_cap": "150083247116.70",
+                      "market_cap_dominance": "0.4080",
+                      "transparent_market_cap": "150003247116.70",
+                      "num_exchanges": "357",
+                      "num_pairs": "42118",
+                      "num_pairs_unmapped": "4591",
+                      "first_candle": "2011-08-18T00:00:00Z",
+                      "first_trade": "2011-08-18T00:00:00Z",
+                      "first_order_book": "2017-01-06T00:00:00Z",
+                      "first_priced_at": "2017-08-18T18:22:19Z",
+                      "rank": "1",
+                      "rank_delta": "0",
+                      "high": "19404.81116899",
+                      "high_timestamp": "2017-12-16",
+                      "1d": {
+                        "price_change": "269.75208019",
+                        "price_change_pct": "0.03297053",
+                        "volume": "1110989572.04",
+                        "volume_change": "-24130098.49",
+                        "volume_change_pct": "-0.02",
+                        "market_cap_change": "4805518049.63",
+                        "market_cap_change_pct": "0.03",
+                        "transparent_market_cap_change": "4800518049.00",
+                        "transparent_market_cap_change_pct": "0.0430",
+                        "volume_transparency": [
+                          {
+                            "grade": "A",
+                            "volume": "2144455081.37",
+                            "volume_change": "-235524941.08",
+                            "volume_change_pct": "-0.10"
+                          },
+                          {
+                            "grade": "B",
+                            "volume": "15856762.85",
+                            "volume_change": "-6854329.88",
+                            "volume_change_pct": "-0.30"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "parameters": []
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "title": "User",
+        "type": "object",
+        "description": "",
+        "examples": [
+          {
+            "id": 142,
+            "firstName": "Alice",
+            "lastName": "Smith",
+            "email": "alice.smith@gmail.com",
+            "dateOfBirth": "1997-10-31",
+            "emailVerified": true,
+            "signUpDate": "2019-08-24"
+          }
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the given user."
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date",
+            "example": "1997-10-31"
+          },
+          "emailVerified": {
+            "type": "boolean",
+            "description": "Set to true if the user's email has been verified."
+          },
+          "createDate": {
+            "type": "string",
+            "format": "date",
+            "description": "The date that the user was created."
+          }
+        },
+        "required": [
+          "id",
+          "firstName",
+          "lastName",
+          "email",
+          "emailVerified"
+        ]
+      }
+    }
+  }
+}
